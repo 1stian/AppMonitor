@@ -18,10 +18,17 @@ namespace AppMonitor
             InitializeComponent();
         }
 
+
+        /// <summary>
+        ///
+        /// </summary>
+        /// <param name="name">Application Name</param>
+        /// <param name="time">Interval to check</param>
+        /// <param name="path">Path to program executable</param>
         public void addProgram(String name, int time, String path)
         {
             listProgram.Items.Add(new ListViewItem(new string[] { name, time.ToString(), path }));
-            textLog.AppendText(name + " has been added. Check every " + time + " mins.");
+            log(name + " has been added. Check every " + time + " mins.");
         }
 
         private void buttonAdd_Click(object sender, EventArgs e)
@@ -39,6 +46,22 @@ namespace AppMonitor
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void buttonRemove_Click(object sender, EventArgs e)
+        {
+            foreach (ListViewItem i in listProgram.CheckedItems)
+            {
+                log(i.Text + " is now removed.");
+                listProgram.Items.Remove(i);
+            }
+        }
+
+        public void log(String text)
+        {
+            textLog.AppendText(Environment.NewLine + text);
+            textLog.SelectionStart = textLog.Text.Length;
+            textLog.ScrollToCaret();
         }
     }
 }
